@@ -5,7 +5,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
                     <h1>{{ $title ?? 'Welcome to VgBlog' }}</h1>
-                    <span class="subheading">{{ $description ?? 'The Best You Have Ever Seen' }}</span>
+                    <span class="subheading">{{ $subheading ?? 'The Best You Have Ever Seen' }}</span>
                 </div>
             </div>
         </div>

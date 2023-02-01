@@ -20,11 +20,11 @@
             <x-admin.sidebar></x-admin.sidebar>
         </div>
         <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
+            {{-- <main>
+                <div class="container-fluid px-4"> --}}
                     @yield('content')
-                </div>
-            </main>
+                {{-- </div>
+            </main> --}}
             <x-admin.footer></x-admin>
         </div>
     </div>
