@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('category_news', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->unsignedBigInteger('news_id');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
+            $table->timestamp('deleted_at', $precision = 0)->nullable()->default(null);
+            $table->foreign('news_id')->references('id')->on('news');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('category_news');
     }
 };
