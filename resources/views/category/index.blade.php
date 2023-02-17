@@ -9,18 +9,18 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
             <!-- Post preview-->
-            @if(!empty($category_news['news_list']))
-            @forelse ($category_news['news_list'] as $i => $news)
+            @if(!empty($category_news))
+            @forelse ($category_news as $i => $news)
             <article class="post-preview">
-                <a href="{{ route('show', ['id' => $news['id']]) }}">
-                    <h2 class="post-title">{{ $news['title'] }}</h2>
-                    <h3 class="post-subtitle">{{ $news['description'] }}</h3>
+                <a href="{{ route('show', ['id' => $news->id]) }}">
+                    <h2 class="post-title">{{ $news->title }}</h2>
+                    <h3 class="post-subtitle">{{ $news->description }}</h3>
                 </a>
             </article>
             <p class="post-meta">
                 Опубликовал
                 <a href="#!">Админ</a>
-                от {{ now()->format('d-m-Y H:i') }}
+                от {{ $news->created_at }}
             </p>
             <!-- Divider-->
             <hr class="my-4" />

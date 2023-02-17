@@ -30,7 +30,7 @@ class NewsFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->title,
+            'title' => $this->faker->sentence(5),
             'description' => $this->faker->paragraph(random_int(1,5), false),
             'body' => $this->faker->realText($maxNbChars = 900, $indexSize = 2),
             'created_at' => $this->faker->dateTime(),

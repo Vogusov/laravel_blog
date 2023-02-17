@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryNews;
 use Illuminate\Http\Request;
 
-class NewsCategoriesController extends Controller
+class CategoryNewsController extends Controller
 {
     public function index(int $id)
     {
@@ -13,6 +14,6 @@ class NewsCategoriesController extends Controller
         // echo "</pre>";
         // exit;
         
-        return view('category.index', ['category_news' => $this->getNewsCategory($id)]);
+        return view('category.index', ['category_news' => CategoryNews::getCategoryNews($id)]);
     }
 }

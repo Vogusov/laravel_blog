@@ -3,8 +3,8 @@
 use App\Http\Controllers\Admin\AdminController as AdminController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
-use App\Http\Controllers\NewsCategoriesController;
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CategoryNewsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Http\Request;
@@ -32,10 +32,10 @@ Route::get('/', function () {
 });
 
 // categories
-Route::get('/categories', [CategoriesController::class, 'index'])->name('categories');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
 
 // news of category
-Route::get('/category/{id}', [NewsCategoriesController::class, 'index'])
+Route::get('/category/{id}', [CategoryNewsController::class, 'index'])
     ->where('id', '\d+')
     ->name('category');
 

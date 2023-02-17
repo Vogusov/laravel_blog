@@ -10,9 +10,9 @@
                 <!-- Post preview-->
                 @forelse ($all_news as $i => $news)
                 <article class="post-preview">
-                    <a href="{{ route('show', ['id' => $news['id']]) }}">
-                        <h2 class="post-title">{{ $news['title'] }}</h2>
-                        <h3 class="post-subtitle">{{ $news['description'] }}</h3>
+                    <a href="{{ route('show', ['id' => $news->id]) }}">
+                        <h2 class="post-title">{{ $news->title }}</h2>
+                        <h3 class="post-subtitle">{{ $news->description }}</h3>
                     </a>
                 </article>
                 <p class="post-meta">

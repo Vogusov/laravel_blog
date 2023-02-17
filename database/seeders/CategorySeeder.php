@@ -4,9 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\News;
+use App\Models\Category;
 
-class NewsSeeder extends Seeder
+
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +16,6 @@ class NewsSeeder extends Seeder
      */
     public function run()
     {
-        News::factory(30)->create();
+        Category::factory(10)->create();
     }
-
-    // private function getData() {
-    //     // $faker = Faker\Factory::create('ru_RU');
-    // }
 }
