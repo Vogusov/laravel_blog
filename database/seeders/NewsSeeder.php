@@ -17,8 +17,4 @@ class NewsSeeder extends Seeder
     {
         News::factory(30)->create();
     }
-
-    // private function getData() {
-    //     // $faker = Faker\Factory::create('ru_RU');
-    // }
 }

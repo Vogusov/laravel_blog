@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('title') Добавить новость - @parent @stop
+@section('title') Редактировать новость - @parent @stop
 @section('content')
 <main>
     <div class="container-fluid px-4">
-        <h1>Добавить новость</h1>
+        <h1>Редактировать новость</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Добавить новость</li>
+            <li class="breadcrumb-item active">Редактировать новость</li>
         </ol>
 
         @if($errors->any())
@@ -15,11 +15,11 @@
         @endif
 
         <div class="mb-3">
-            <form action="{{ route('admin.news.store') }}" method="post">
+            <form action="{{ route('admin.news.update', ['news' => $news]) }}" method="post">
                 @csrf
                 <div class="form-group mb-3">
                     <label for="title" class="form-label">Заголовок</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
+                    <input type="text" class="form-control" id="title" name="title" value="{{ $news->title }}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="category" class="form-label">Категории</label>
@@ -33,12 +33,12 @@
                 <div class="form-group mb-3">
                     <label for="description" class="form-label">Описание</label>
                     <textarea name="description" id="description" class="form-control" cols="30"
-                        rows="3">{{ old('description') }}</textarea>
+                        rows="3">{{ $news->description }}</textarea>
                 </div>
                 <div class="form-group mb-3">
                     <label for="body" class="form-label">Текст</label>
                     <textarea name="body" id="body" class="form-control" cols="30" rows="3">
-                        {{ old('body') }}
+                        {{ $news->body }}
                     </textarea>
                 </div>
 

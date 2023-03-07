@@ -17,10 +17,11 @@
                     <a href="#!">Админ</a>
                     от {{ $one_news_data->created_at }}
                 </p>
+                @if(!empty($one_news_data->updated_at))
                 <p class="post-meta">
                     Обновлено {{ $one_news_data->updated_at }}
                 </p>
-
+                @endif
             </div>
         </div>
     </div>

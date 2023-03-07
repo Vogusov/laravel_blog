@@ -53,7 +53,7 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 // admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespase' => 'Admin'], function () {
     Route::resource('categories', AdminCategoryController::class);
     Route::resource('news', AdminNewsController::class);
 });

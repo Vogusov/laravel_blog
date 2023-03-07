@@ -12,7 +12,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('news.index', ['all_news' => News::getNews()]);
+        return view('news.index', ['all_news' => News::all()]);
     }
 
 
@@ -21,6 +21,11 @@ class NewsController extends Controller
      */
     public function showOneNews(int $id)
     {
-        return view('news.show', ['one_news_data' => News::getOneNews($id)]);
+        return view(
+            'news.show',
+            [
+                'one_news_data' =>  News::where('id', $id)->whereNull('deleted_at')->first()
+            ]
+        );
     }
 }

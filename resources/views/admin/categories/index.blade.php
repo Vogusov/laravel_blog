@@ -17,12 +17,14 @@
                 Список категорий
             </div>
             <div class="card-body">
+                @include('inc.success')
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
                             <th>№</th>
                             <th>Название</th>
                             <th>Дата добавления</th>
+                            <th>Дата обновления</th>
                             <th>Управление</th>
                         </tr>
                     </thead>
@@ -30,9 +32,10 @@
                         @forelse ($categories as $i => $category)
                         <tr>
                             <td>{{ $loop->index +1}}</td>
-                            <td>{{ $category['name'] }}</td>
-                            <td>{{ now()->format('d-m-Y H:i') }}</td>
-                            <td><a href="{{ route('admin.categories.edit', ['category' => $category['id']]) }}"
+                            <td>{{ $category->name }}</td>
+                            <td>{{ $category->created_at }}</td>
+                            <td>{{ $category->updated_at }}</td>
+                            <td><a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}"
                                     style="font: size 12px;">ред.</a>&nbsp;|&nbsp;<a href="#"
                                     style="color:red;font: size 12px">уд.</a>
                             </td>

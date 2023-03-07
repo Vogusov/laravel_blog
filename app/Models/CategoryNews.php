@@ -10,17 +10,15 @@ class CategoryNews extends Model
 {
     use HasFactory;
 
-    public static function getCategoryNews(int $id) {
+    public static function getCategoryNews(int $id)
+    {
         $category_data = DB::table('categories')->find($id);
         $data['category'] = $category_data;
 
         $all_news_id = DB::table('category_news')->where('category_id', '=', $id)->get('news_id');
-        // dd($all_news_id);
         $category_news = [];
         foreach ($all_news_id as $news_id) {
-            // dd($news_id->news_id);
             $category_news[] = DB::table('news')->find($news_id->news_id);
-            // dd($category_news);
         }
         $data['news'] = $category_news;
         return $data;

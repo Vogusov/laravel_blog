@@ -11,10 +11,14 @@ class Category extends Model
     use HasFactory;
 
 
-    public static function getCategories()
-    {
-        return DB::table('categories')->get();
+    protected $fillable = [
+        'name'
+    ];
+
+    public function getFillable() {
+        return $this->fillable;
     }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

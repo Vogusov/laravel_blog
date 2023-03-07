@@ -10,15 +10,6 @@ class News extends Model
 {
     use HasFactory;
 
-    /**
-     * Получить все новости
-     */
-    public static function getNews()
-    {
-        return DB::table('news')->get();
-    }
-
-
 
     public static function getOneNews(int $id)
     {
