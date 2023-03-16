@@ -29,7 +29,8 @@ Route::get('/test', function () {
 // main page
 Route::get('/', function () {
     return view('welcome');
-});
+})
+->name('main');
 
 // categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories');

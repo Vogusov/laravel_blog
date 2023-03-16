@@ -24,13 +24,11 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="category" class="form-label">Категории</label>
-                    <select name="category" id="category" class="form-control">
+                    <select name="category[]" id="category" class="form-control" size={{ count($categories) }}
+                        multiple="">
                         @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">
-                            {{ $category->name }}
-                        </option>
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
-
                     </select>
                 </div>
                 <div class="form-group mb-3">

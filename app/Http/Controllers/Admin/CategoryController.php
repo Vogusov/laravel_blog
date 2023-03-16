@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryUpdateRequest;
+use App\Http\Requests\CategoryStoreRequest;
 
 class CategoryController extends Controller
 {
@@ -33,13 +35,13 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CategoryStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
         $statusCategory = Category::create(
-            $request->only(['name'])
+            $request->validated()
         );
         if ($statusCategory) {
             return redirect()->route('admin.categories.index')->with('success', 'Категория создана');
@@ -72,14 +74,14 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CategoryUpdateRequest $request
      * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
         $statusCategory = $category->fill(
-            $request->only($category->getFillable())
+            $request->validated()
         )->save();
 
         if ($statusCategory) {
@@ -91,11 +93,18 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Request $request
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Category $category)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                $category->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }

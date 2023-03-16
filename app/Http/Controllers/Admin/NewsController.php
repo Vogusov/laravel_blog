@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\News;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\NewsStoreRequest;
+use App\Http\Requests\NewsUpdateRequest;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -17,8 +19,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $all_news = News::all()->map(function($value, $key){
-            $value->body = Str::limit(strip_tags($value->body), 50); 
+        $all_news = News::all()->map(function ($value, $key) {
+            $value->body = Str::limit(strip_tags($value->body), 50);
             return $value;
         });
 
@@ -52,15 +54,14 @@ class NewsController extends Controller
      * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, News $news)
+    public function store(NewsStoreRequest $request)
     {
-        $statusCategory = News::create($request->only($news->getFillable()));
+
+        $statusCategory = News::create($request->validated());
         if ($statusCategory) {
             return redirect()->route('admin.news.index')->with('success', 'Новость создана');
         }
         return back()->with('error', 'Не удалось создать запись');
-        // dd($request);
-        // dd(News::create());
     }
 
     /**
@@ -96,17 +97,18 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  NewsUpdateRequest $request
      * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(NewsUpdateRequest $request, News $news)
     {
-        // dd($request);
-        $statusNews = $news->fill(
-            $request->only($news->getFillable())
-        )->save();
+        $statusNews = $news->fill($request->validated())->save();
+
         if ($statusNews) {
+            $cats =  $request->category;
+            $news->categories()->sync($cats);
+
             return redirect()->route('admin.news.index')->with('success', 'Новость обновлена');
         }
         return back()->with('error', 'Не удалось обновить запись');
@@ -118,8 +120,14 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, News $news)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                $news->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }

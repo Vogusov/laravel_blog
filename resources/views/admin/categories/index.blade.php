@@ -36,7 +36,9 @@
                             <td>{{ $category->created_at }}</td>
                             <td>{{ $category->updated_at }}</td>
                             <td><a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}"
-                                    style="font: size 12px;">ред.</a>&nbsp;|&nbsp;<a href="#"
+                                    style="font: size 12px;">ред.</a>
+                                &nbsp;|&nbsp;
+                                <a href="#" class="delete" data-id="{{ $category->id }}"
                                     style="color:red;font: size 12px">уд.</a>
                             </td>
                         </tr>
@@ -61,3 +63,31 @@
     </div>
 </main>
 @endsection
+
+@push('custom-scripts')
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+    $(function(){
+        $('.delete').on('click', function(){
+            if(confirm('Подтверждаете удаление?')) {
+                // alert($(this).data('id'))
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/categories/' + $(this).data('id'),
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(){
+                        alert('Запись удалена')
+                        location.reload()
+                    },
+                    error: function(){
+                        alert('Ошибка')
+                    },
+                })
+            }
+        })
+    })
+</script>
+@endpush
