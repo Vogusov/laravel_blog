@@ -23,4 +23,8 @@ class CategoryNews extends Model
         $data['news'] = $category_news;
         return $data;
     }
+
+    public function index(int $id) {
+        
+    }
 }

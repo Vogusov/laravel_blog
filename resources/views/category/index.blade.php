@@ -1,8 +1,8 @@
 @extends('layouts.main')
 @section('title') Новости категории - @parent @stop
-
+{{-- {{ dd($category_news) }} --}}
 @section('content')
-<x-header title="Список новостей категории &#34;{{ $category_news['category']->name ?? '' }}&#34;"
+<x-header title="Список новостей категории &#34;{{ $category_news->name ?? '' }}&#34;"
     description="{{ $catgory_news['category']['description'] ?? '' }}"></x-header>
 
 <div class="container px-4 px-lg-5">
@@ -35,9 +35,10 @@
             @endif
 
             <!-- Pager-->
-            <div class="d-flex justify-content-end mb-4">
-                <a class="btn btn-primary text-uppercase" href="#!">Older Posts→</a>
-            </div>
+            {{-- {{ $category_news->links() }} --}}
+            {{-- <div class="d-flex justify-content-end mb-4"> --}}
+                {{-- <a class="btn btn-primary text-uppercase" href="#!">Older Posts→</a>
+            </div> --}}
         </div>
     </div>
 </div>

@@ -9,9 +9,10 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <!-- Post preview-->
                 @forelse ($all_news as $i => $news)
+                {{-- {{ dump($news->categories) }} --}}
                 <article class="post-preview">
                     <a href="{{ route('show', ['id' => $news->id]) }}">
-                        <h2 class="post-title">{{ $news->title }}</h2>
+                        <h2 class="post-title">{{ $news->title }}{{ count($news->categories) }}</h2>
                         <h3 class="post-subtitle">{{ $news->description }}</h3>
                     </a>
                 </article>
@@ -27,9 +28,10 @@
                 @endforelse
 
                 <!-- Pager-->
-                <div class="d-flex justify-content-end mb-4">
+                {{ $all_news->links() }}
+                {{-- <div class="d-flex justify-content-end mb-4">
                     <a class="btn btn-primary text-uppercase" href="#!">Older Posts→</a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

@@ -8,24 +8,27 @@
             <li class="breadcrumb-item active">Редактировать новость</li>
         </ol>
 
-        @if($errors->any())
+        {{-- @if($errors->any())
         @foreach($errors->all() as $error)
         <div class="alert alert-danger">{{ $error }}</div>
         @endforeach
-        @endif
+        @endif --}}
+        @include('inc.message')
 
         <div class="mb-3">
             <form action="{{ route('admin.news.update', ['news' => $news]) }}" method="post">
                 @csrf
+                @method('put')
+
                 <div class="form-group mb-3">
                     <label for="title" class="form-label">Заголовок</label>
                     <input type="text" class="form-control" id="title" name="title" value="{{ $news->title }}">
                 </div>
                 <div class="form-group mb-3">
                     <label for="category" class="form-label">Категории</label>
-                    <select name="category" id="category" class="form-control" multiple>
+                    <select name="category" id="category" class="form-control">
                         @foreach ($categories as $category)
-                        <option @if(old('category')==={{ $category->name }} ) selected @endif value="{{ $category->name }}">{{ $category->name }}</option>
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
 
                     </select>

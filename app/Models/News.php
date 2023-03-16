@@ -10,11 +10,21 @@ class News extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'body',
+        'is_deleted'
+    ];
 
-    public static function getOneNews(int $id)
-    {
-        return DB::table('news')->find($id);
+    public function getFillable() {
+        return $this->fillable;
     }
+
+    // public static function getOneNews(int $id)
+    // {
+    //     return DB::table('news')->find($id);
+    // }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

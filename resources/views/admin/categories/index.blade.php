@@ -17,7 +17,7 @@
                 Список категорий
             </div>
             <div class="card-body">
-                @include('inc.success')
+                @include('inc.message')
                 <table id="datatablesSimple">
                     <thead>
                         <tr>

@@ -12,7 +12,13 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('news.index', ['all_news' => News::all()]);
+        $all_news = News::orderBy('id', 'desc')
+            ->with('category')
+            ->paginate(5)
+            ->withPath('/news');
+        // dd($all_news);
+
+        return view('news.index', ['all_news' => $all_news]);
     }
 
 

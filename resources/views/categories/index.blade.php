@@ -8,7 +8,7 @@
 
             @forelse ($categories as $category)
             <div>
-                <a href="{{ route('category', ['id' => $category->id]) }}" class="post-subtitle">{{ ucfirst($category->name) }}</a>
+                <a href="{{ route('category', ['id' => $category->id]) }}" class="post-subtitle">{{ ucfirst($category->name) }} ({{ count($category->news) }})</a>
             </div>
             @empty
             <h2>Нет записей</h2>

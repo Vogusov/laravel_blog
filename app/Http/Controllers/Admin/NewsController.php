@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\News;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -15,8 +17,13 @@ class NewsController extends Controller
      */
     public function index()
     {
+        $all_news = News::all()->map(function($value, $key){
+            $value->body = Str::limit(strip_tags($value->body), 50); 
+            return $value;
+        });
+
         return view('admin.news.index', [
-            'all_news' => News::all()
+            'all_news' => $all_news
         ]);
     }
 
@@ -27,23 +34,33 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        return view(
+            'admin.news.create',
+            [
+                'categories' => Category::all()->filter(function ($value, $key) {
+                    return is_null($value->deleted_at);
+                })
+            ]
+
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, News $news)
     {
-        $request->validate([
-            'title' => ['required', 'string']
-        ]);
-        $data = $request->input();
-        // $data = $request->only(['title', 'status', 'description']);
-        // dd($data);
+        $statusCategory = News::create($request->only($news->getFillable()));
+        if ($statusCategory) {
+            return redirect()->route('admin.news.index')->with('success', 'Новость создана');
+        }
+        return back()->with('error', 'Не удалось создать запись');
+        // dd($request);
+        // dd(News::create());
     }
 
     /**
@@ -60,24 +77,39 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  News  $news
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        return view('admin.news.edit', ['news' => $news]);
+        return view(
+            'admin.news.edit',
+            [
+                'news' => $news,
+                'categories' => Category::all()->filter(function ($value, $key) {
+                    return is_null($value->deleted_at);
+                })
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news)
     {
-        //
+        // dd($request);
+        $statusNews = $news->fill(
+            $request->only($news->getFillable())
+        )->save();
+        if ($statusNews) {
+            return redirect()->route('admin.news.index')->with('success', 'Новость обновлена');
+        }
+        return back()->with('error', 'Не удалось обновить запись');
     }
 
     /**

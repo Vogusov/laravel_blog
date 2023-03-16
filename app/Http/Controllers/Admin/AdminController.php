@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AdminController extends Controller
 {
@@ -25,6 +26,6 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.index', ['sections' => $this->getSections()]); 
+        return view('admin.index', ['sections' => $this->getSections()]);
     }
 }

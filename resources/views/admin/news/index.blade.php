@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-    @section('title') Список новостей - @parent @stop
-    @section('content')
+@section('title') Список новостей - @parent @stop
+@section('content')
 
 <main>
     <div class="container-fluid px-4">
@@ -16,13 +16,18 @@
                 Список новостей
             </div>
             <div class="card-body">
+                @include('inc.message')
+
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Заголовок</th>
                             <th>Описание</th>
+                            <th>Текст</th>
                             <th>Дата добавления</th>
+                            <th>Дата редактирования</th>
+                            <th>Удалена</th>
                             <th>Управление</th>
                         </tr>
                     </thead>
@@ -30,10 +35,14 @@
                         @forelse ($all_news as $i => $news)
                         <tr>
                             <td>{{ $loop->index +1}}</td>
-                            <td>{{ $news['title'] }}</td>
-                            <td>{{ $news['description'] }}</td>
-                            <td>{{ now()->format('d-m-Y H:i') }}</td>
-                            <td><a href="{{ route('admin.news.edit', ['news' => $news['id']]) }}"
+                            <td>{{ strip_tags($news->title) }}</td>
+                            <td>{{ strip_tags($news->description) }}</td>
+                            <td>{{ $news->body }}</td>
+                            <td>{{ $news->created_at }}</td>
+                            <td>{{ $news->updated_at }}</td>
+                            <td>@if(!is_null($news->deleted_at)) {{ $news->deleted_at }} @endif</td>
+
+                            <td><a href="{{ route('admin.news.edit', ['news' => $news->id]) }}"
                                     style="font: size 12px;">ред.</a> &nbsp; | &nbsp;
                                 <a href="#" style="color:red;font: size 12px">уд.</a>
                             </td>
@@ -47,7 +56,10 @@
                             <th>ID</th>
                             <th>Заголовок</th>
                             <th>Описание</th>
+                            <th>Текст</th>
                             <th>Дата добавления</th>
+                            <th>Дата редактирования</th>
+                            <th>Удалена</th>
                             <th>Управление</th>
                         </tr>
                     </tfoot>
