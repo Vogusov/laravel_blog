@@ -29,13 +29,17 @@ class CategoryUpdateRequest extends FormRequest
     }
 
 
-    // public function messages()
-    // {
-        
-    // }
+    public function messages()
+    {
+        return [
+            'required' => 'Нужно заполнить поле :attribute'
+        ];
+    }
 
-    // public function attributes()
-    // {
-        
-    // }
+    public function attributes()
+    {
+        return [
+            'name' => 'Название',
+        ];
+    }
 }

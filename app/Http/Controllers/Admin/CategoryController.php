@@ -44,9 +44,11 @@ class CategoryController extends Controller
             $request->validated()
         );
         if ($statusCategory) {
-            return redirect()->route('admin.categories.index')->with('success', 'Категория создана');
+            return redirect()
+                ->route('admin.categories.index')
+                ->with('success', __('message.admin.category.created.success'));
         }
-        return back()->with('error', 'Не удалось создать запись');
+        return back()->with('error', __('message.admin.category.created.fail'));
     }
 
     /**
@@ -85,9 +87,12 @@ class CategoryController extends Controller
         )->save();
 
         if ($statusCategory) {
-            return redirect()->route('admin.categories.index')->with('success', 'Категория обновлена');
+            return redirect()
+                ->route('admin.categories.index')
+                ->with('success', __('message.admin.category.updated.success'));
         }
-        return back()->with('error', 'Не удалось обновить запись');
+        return back()
+            ->with('error', __('message.admin.category.updated.fail'));
     }
 
     /**

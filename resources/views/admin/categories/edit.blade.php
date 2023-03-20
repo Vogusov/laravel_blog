@@ -18,6 +18,13 @@
                     <label for="name" class="form-label">Название</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}">
                 </div>
+                @if($errors->has('name'))
+                <div class="alert alert-danger">
+                    @foreach($errors->get('name') as $error)
+                    <p style="margin-bottom:8px">{{ $error }}</p>
+                    @endforeach
+                </div>
+                @endif
 
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </form>

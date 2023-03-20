@@ -34,13 +34,19 @@ class NewsStoreRequest extends FormRequest
 
 
 
-    // public function messages()
-    // {
-        
-    // }
+    public function messages()
+    {
+        return [
+            'required' => 'Нужно заполнить поле :attribute'
+        ];
+    }
 
-    // public function attributes()
-    // {
-        
-    // }
+    public function attributes()
+    {
+        return [
+            'title' => 'Заголовок',
+            'body' => 'Текст',
+            'category' => 'Категории'
+        ];
+    }
 }

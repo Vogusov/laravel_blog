@@ -59,9 +59,12 @@ class NewsController extends Controller
 
         $statusCategory = News::create($request->validated());
         if ($statusCategory) {
-            return redirect()->route('admin.news.index')->with('success', 'Новость создана');
+            return redirect()
+                ->route('admin.news.index')
+                ->with('success', __('message.admin.news.created.success'));
         }
-        return back()->with('error', 'Не удалось создать запись');
+        return back()
+            ->with('error', __('message.admin.news.created.fail'));
     }
 
     /**
@@ -109,9 +112,9 @@ class NewsController extends Controller
             $cats =  $request->category;
             $news->categories()->sync($cats);
 
-            return redirect()->route('admin.news.index')->with('success', 'Новость обновлена');
+            return redirect()->route('admin.news.index')->with('success', __('message.admin.news.updated.success'));
         }
-        return back()->with('error', 'Не удалось обновить запись');
+        return back()->with('error', __('message.admin.news.updated.fail'));
     }
 
     /**
