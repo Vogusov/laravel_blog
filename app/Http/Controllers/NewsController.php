@@ -13,7 +13,7 @@ class NewsController extends Controller
     public function index()
     {
         $all_news = News::orderBy('id', 'desc')
-            ->with('category')
+            ->with('categories')
             ->paginate(5)
             ->withPath('/news');
         // dd($all_news);

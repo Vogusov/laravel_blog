@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Account\IndexController;
 use App\Http\Controllers\Admin\AdminController as AdminController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +33,11 @@ Route::get('/test', function () {
 Route::get('/', function () {
     return view('welcome');
 })
-->name('main');
+    ->name('main');
 
 // categories
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+Route::get('/categories', [CategoryController::class, 'index'])
+    ->name('categories');
 
 // news of category
 Route::get('/category/{id}', [CategoryNewsController::class, 'index'])
@@ -50,11 +54,38 @@ Route::get('/news/show/{id}', [NewsController::class, 'showOneNews'])
     ->name('show');
 
 // Contact
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])
+    ->name('contact');
 
 // admin
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespase' => 'Admin'], function () {
-    Route::resource('categories', AdminCategoryController::class);
-    Route::resource('news', AdminNewsController::class);
+// Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespase' => 'Admin'], function () {
+//     Route::resource('categories', AdminCategoryController::class);
+//     Route::resource('news', AdminNewsController::class);
+// });
+
+
+// backoffice
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/account', IndexController::class)
+        ->name('account');
+
+    //! TODO: Сделать логаут через ПОСТ и АЯКС
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect()->route('login');
+    })
+        ->name('logout');
+
+    // admin
+    Route::get('/admin', [AdminController::class, 'index'])->middleware('admin')
+        ->name('admin');
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
+        Route::resource('categories', AdminCategoryController::class);
+        Route::resource('news', AdminNewsController::class);
+        // Route::view('/', 'admin.index')
+        //     ->name('index');
+    });
 });
+
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
