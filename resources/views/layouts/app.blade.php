@@ -80,6 +80,32 @@
         <main class="py-4">
             @yield('content')
         </main>
+        {{-- @push('custom-scripts') --}}
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <script>
+            $(function(){
+        $('#logout-form').on('submit', function(){
+            if(confirm('Вы хотите выйти из аккаунта?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/logout',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(){
+                        alert('Вы вышли из аккаунта')
+                        location.reload()
+                    },
+                    error: function(){
+                        alert('Ошибка')
+                    },
+                })
+            }
+        })
+    })
+        </script>
+        {{-- @endpush --}}
     </div>
 </body>
 

@@ -70,14 +70,15 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('account');
 
     //! TODO: Сделать логаут через ПОСТ и АЯКС
-    Route::get('/logout', function () {
+    Route::post('/logout', function () {
         Auth::logout();
         return redirect()->route('login');
     })
         ->name('logout');
 
     // admin
-    Route::get('/admin', [AdminController::class, 'index'])->middleware('admin')
+    Route::get('/admin', [AdminController::class, 'index'])
+        ->middleware('admin')
         ->name('admin');
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::resource('categories', AdminCategoryController::class);
