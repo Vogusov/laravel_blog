@@ -4,6 +4,7 @@ use App\Http\Controllers\Account\IndexController;
 use App\Http\Controllers\Admin\AdminController as AdminController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\CategoryNewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
@@ -69,7 +70,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/account', IndexController::class)
         ->name('account');
 
-    //! TODO: Сделать логаут через ПОСТ и АЯКС
     Route::post('/logout', function () {
         Auth::logout();
         return redirect()->route('login');
@@ -83,8 +83,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('news', AdminNewsController::class);
-        // Route::view('/', 'admin.index')
-        //     ->name('index');
+        Route::get('/parse', ParserController::class)
+            ->name('parse');
     });
 });
 

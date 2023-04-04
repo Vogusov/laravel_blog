@@ -20,7 +20,10 @@
                         __('menu.account') }}</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" id="logout" href="!#">{{
                         __('menu.logout') }}</a></li>
+
+                
                 @endauth
+
 
                 @guest
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('login') }}">{{
