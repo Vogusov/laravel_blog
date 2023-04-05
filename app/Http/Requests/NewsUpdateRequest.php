@@ -24,8 +24,8 @@ class NewsUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'min:3', 'max:50'],
-            'description' => ['required', 'string', 'min:3', 'max:200'],
+            'title' => ['required', 'string', 'min:3', 'max:150'],
+            'description' => ['required', 'string', 'min:3', 'max:500'],
             'body' => ['required', 'string', 'min:3', 'max:10000'],
             'category' => ['sometimes', 'array'],
             'image' => ['sometimes']

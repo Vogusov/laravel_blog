@@ -9,7 +9,6 @@
         </ol>
 
         @include('inc.message')
-
         <div class="mb-3">
             <form action="{{ route('admin.news.update', ['news' => $news]) }}" method="post">
                 @csrf
@@ -35,10 +34,11 @@
                     <select name="category[]" id="category" class="form-control" size={{ count($categories) }}
                         multiple="">
                         @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" @if($news->categories->contains($category))
+                            selected @endif >{{ $category->name }}</option>
                         @endforeach
                     </select>
-                </div>                
+                </div>
                 @if($errors->has('category'))
                 <div class="alert alert-danger">
                     @foreach($errors->get('category') as $error)
